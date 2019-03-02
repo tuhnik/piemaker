@@ -1,34 +1,60 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import Plot from 'react-plotly.js';
 
-class App extends Component {
-    state= {values: null, colors: null}
-    componentDidMount() {
-        
-      let values = []
-      let colors = []
-  
-      for(let o in this.props.data) {
-        values.push(scale(this.props.data[o].duration, 0, 720, 0, 100));
-        colors.push(generateColor(this.props.data[o].label));
-      }
-  
-      this.setState({values, colors})
-      
+function Piemaker (props){
+   let [state, setState] = useState({values: null, colors: null})
+
+   useEffect(()=>{
+    console.log("updated piemaker", "props: " + props)
+    let values = []
+    let colors = []
+
+    for(let o in props.data) {
+      values.push(scale(props.data[o].duration, 0, 720, 0, 100));
+      colors.push(generateColor(props.data[o].label));
     }
-    render() {
-      var data = [{
-        values: this.state.values,
+    setState({values, colors})
+   }, [props])
+
+      let data = [{
+        values: state.values,
         showlegend: false,
         direction: "clockwise",
-        hole: 0.4,
+        hole: 0.7,
         sort: false,
-        marker: {colors: this.state.colors},
-        type: 'pie'
+        marker: {colors: state.colors},
+        type: 'pie',
+        hoverinfo: "none",
+        textinfo: "none",
+        textposition: "outside",
       }]
-      return ( <Plot style={{width: this.props.width, height: this.props.height}}data={data}/>
+      let layout = {
+        autosize: true,
+        paper_bgcolor: "rgba(0,0,0,0)",
+        clickmode: "none",
+        dragmode: "none",
+        hovermode: "none",
+        barmode: "relative",
+        font: {
+          family: "Ubuntu, Arial, Helvetica, sans-serif",
+          size: 10,
+          color: "#7f7f7f"
+        },
+
+        margin: {
+            t: 0,
+            b: 0,
+            l: 0,
+            r: 0
+          }
+      }
+
+      let config = {
+        displayModeBar: false
+      };
+
+      return ( <Plot style={{width: "100%", height: "100%"}} data={data} layout={layout} config={config}/>
       );
-    }
   }
   
   const scale = (num, in_min, in_max, out_min, out_max) => {
@@ -36,9 +62,9 @@ class App extends Component {
   }
   
   const generateColor = (str) =>{
-    if(str === "nothing") return "#ebebeb"
-    if(str === "Light") return "yellow"
+    if(str === "nothing") return "#f9f3f3a6"
+    if(str === "Light") return "#f3de21"
   }
   
   
-  export default App;
+  export default Piemaker;
