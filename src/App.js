@@ -42,7 +42,7 @@ function App(props) {
     <div className="App" style={{ width: "25%"}}>
       <Piemaker data={state.data} colors={state.colors}/>
       <div className="data"><b>{JSON.stringify(state, null, 4).replace(/"/gi, "")}</b></div>
-      <input type="range" min="1" max="25" value={state.speed} onChange={sliderChanged}/>
+      <input type="range" min="0" max="25" value={state.speed} onChange={sliderChanged}/>
     </div>
   );
 }

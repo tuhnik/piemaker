@@ -71,11 +71,11 @@ function Piemaker (props){
   let [state, setState] = useState({values: null, colors: null})
 
   useEffect(()=>{
-  let values = []
-  for(let o in props.data) {
-    values.push(props.data[o]);
-  }
-  setState({values, colors: props.colors})
+    let values = []
+    for(let o in props.data) {
+      values.push(props.data[o]);
+    }
+    setState({values, colors: props.colors})
   }, [props])
 
   let data = [{
