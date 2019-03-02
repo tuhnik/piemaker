@@ -53,12 +53,12 @@ export default App;
 function useInterval(callback, delay) {
   const savedCallback = useRef();
 
-  // Remember the latest callback.
+  // remember the latest callback
   useEffect(() => {
     savedCallback.current = callback;
   });
 
-  // Set up the interval.
+  // set up the interval
   useEffect(() => {
     function tick() {
       savedCallback.current();
