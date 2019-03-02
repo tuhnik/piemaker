@@ -5,15 +5,12 @@ function Piemaker (props){
    let [state, setState] = useState({values: null, colors: null})
 
    useEffect(()=>{
-    console.log("updated piemaker", "props: " + props)
+    // console.log("updated piemaker", "props: " + JSON.stringify(props))
     let values = []
-    let colors = []
-
     for(let o in props.data) {
-      values.push(scale(props.data[o].duration, 0, 720, 0, 100));
-      colors.push(generateColor(props.data[o].label));
+      values.push(props.data[o]);
     }
-    setState({values, colors})
+    setState({values, colors: props.colors})
    }, [props])
 
       let data = [{
@@ -57,14 +54,6 @@ function Piemaker (props){
       );
   }
   
-  const scale = (num, in_min, in_max, out_min, out_max) => {
-    return (num - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-  }
-  
-  const generateColor = (str) =>{
-    if(str === "nothing") return "#f9f3f3a6"
-    if(str === "Light") return "#f3de21"
-  }
-  
+
   
   export default Piemaker;
