@@ -2,16 +2,11 @@ import React, { useState, useEffect, useRef } from "react";
 import Piemaker from "./Piemaker.js";
 
 function App(props) {
-  let [state, changeState] = useState({ data: {x: 0, y: 100}, colors: [], speed: 1});
-
-
-
-
+  let [state, changeState] = useState({ data: {x: 0, y: 100}, colors: ["#000", "#EBEBEB"], speed: 1});
 
   useEffect(() => {
     console.log("App mounted");
   }, []);
-
 
   useInterval(() => {
     let newstate = {...state}
@@ -22,15 +17,14 @@ function App(props) {
     if(data.x > 99) {
       data.x = 0
       data.y = 100
+      newstate.colors[1] = newstate.colors[0]
       newstate.colors[0] = getRandomColor()
-      newstate.colors[1] = getRandomColor()
+      
     }
 
     changeState(newstate)
   }, 100);
 
- 
- 
   const sliderChanged = (e) => {
     let newstate = {...state}
     newstate.speed =  parseInt(e.target.value)
@@ -48,7 +42,6 @@ function App(props) {
 }
 
 export default App;
-
 
 function useInterval(callback, delay) {
   const savedCallback = useRef();
@@ -69,7 +62,6 @@ function useInterval(callback, delay) {
     }
   }, [delay]);
 }
-
 
 function getRandomColor() {
   var letters = '0123456789ABCDEF';
