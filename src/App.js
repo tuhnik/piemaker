@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import Piemaker from "./Piemaker.js";
 
 function App(props) {
-  let [state, changeState] = useState({ data: {x: 0, y: 100}, colors: ["#000", "#EBEBEB"], speed: 1});
+  const [state, setState] = useState({ data: {x: 0, y: 1, z: 99}, colors: ["#EBEBEB", "#000", "#EBEBEB"], speed: 1});
 
   useEffect(() => {
     console.log("App mounted");
@@ -12,23 +12,21 @@ function App(props) {
     let newstate = {...state}
     let data = newstate.data
     data.x += newstate.speed
-    data.y -= newstate.speed
+    data.z -= newstate.speed
 
     if(data.x > 99) {
       data.x = 0
-      data.y = 100
-      newstate.colors[1] = newstate.colors[0]
-      newstate.colors[0] = getRandomColor()
-      
+      data.z = 99
+      // newstate.colors[1] = newstate.colors[0]
+      // newstate.colors[0] = getRandomColor() 
     }
-
-    changeState(newstate)
+    setState(newstate)
   }, 100);
-
+ 
   const sliderChanged = (e) => {
     let newstate = {...state}
     newstate.speed =  parseInt(e.target.value)
-    changeState(newstate)
+    setState(newstate)
   }
 
   if (!state.data) return <span />;
@@ -46,12 +44,10 @@ export default App;
 function useInterval(callback, delay) {
   const savedCallback = useRef();
 
-  // remember the latest callback
   useEffect(() => {
     savedCallback.current = callback;
   });
 
-  // set up the interval
   useEffect(() => {
     function tick() {
       savedCallback.current();
